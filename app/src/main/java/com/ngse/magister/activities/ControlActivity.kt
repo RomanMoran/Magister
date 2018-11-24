@@ -170,18 +170,6 @@ class ControlActivity : AppCompatActivity() {
             .offsetX(5.0)
             .offsetY(5.0)
 
-
-        /*val series3 = cartesian.line(series3Mapping)
-        series3.name("Tequila")
-        series3.hovered().markers().enabled(true)
-        series3.hovered().markers()
-            .type(MarkerType.CIRCLE)
-            .size(4.0)
-        series3.tooltip()
-            .position("right")
-            .anchor(Anchor.LEFT_CENTER)
-            .offsetX(5.0)
-            .offsetY(5.0)*/
         progress_bar.visibility = View.GONE
     }
 
@@ -189,9 +177,13 @@ class ControlActivity : AppCompatActivity() {
     data class CustomDataEntry(val x: String, val value: Number, val value2: Number/*, val value3: Number*/) : ValueDataEntry(x, value) {
         init {
             setValue("value2", value2)
-            //setValue("value3", value3)
         }
 
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        myBluetoothService?.cancel()
     }
 
     private fun disconnect() {
