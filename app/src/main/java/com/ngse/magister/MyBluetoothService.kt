@@ -27,9 +27,13 @@ class MyBluetoothService(
     private val mHandler: Handler,
     mmSocket: BluetoothSocket
 ) {
-
+    private var connectedThread : ConnectedThread
     init {
-        ConnectedThread(mmSocket).start()
+        connectedThread = ConnectedThread(mmSocket).apply { start() }
+    }
+
+    fun write(bytes: ByteArray){
+        connectedThread.write(bytes)
     }
 
     private inner class ConnectedThread(private val mmSocket: BluetoothSocket) : Thread() {
@@ -51,6 +55,7 @@ class MyBluetoothService(
                 // Read from the InputStream.
                 try {
                     //mmInStream.read(mmBuffer)
+                    val isConnected = mmSocket.isConnected
                     val bytesAvailable = mmInStream.available()
                     if (bytesAvailable > 0) {
                         val packetBytes = ByteArray(bytesAvailable)

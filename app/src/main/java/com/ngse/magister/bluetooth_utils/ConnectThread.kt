@@ -31,16 +31,15 @@ class ConnectThread(deviceAddress: String,val handler: Handler) : Thread() {
         mBluetoothAdapter?.cancelDiscovery()
         try {
 
-        mmSocket?.use { socket ->
             // Connect to the remote device through the socket. This call blocks
             // until it succeeds or throws an exception.
-            socket.connect()
+            mmSocket?.connect()
 
             // The connection attempt succeeded. Perform work associated with
             // the connection in a separate thread.
             val readMsg = handler.obtainMessage(MESSAGE_STATUS, STATUS.CONNECTED to mmSocket)
             readMsg.sendToTarget()
-        }
+
         } catch (e: IOException) {
             val readMsg = handler.obtainMessage(MESSAGE_STATUS, STATUS.FAILED_CONNECTION)
             readMsg.sendToTarget()

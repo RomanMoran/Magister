@@ -26,6 +26,7 @@ import com.anychart.data.Set
 import com.jjoe64.graphview.LegendRenderer
 import com.jjoe64.graphview.series.DataPointInterface
 import com.jjoe64.graphview.series.LineGraphSeries
+import com.ngse.magister.bluetooth_utils.ConnectThreadAsync
 import com.ngse.magister.data.CustomDataPoint
 import com.ngse.magister.data.Parameters
 import java.util.*
@@ -57,8 +58,21 @@ class MainActivity : AppCompatActivity() {
         btnOn.setOnClickListener{ turnOnLed()}
         btnOff.setOnClickListener{ turnOffLed()  }
         btnDis.setOnClickListener{ Disconnect() }
-        val connectBt = ConnectBT()
-        connectBt.execute() //Call the class to connect
+        //val connectBt = ConnectBT()
+        //connectBt.execute() //Call the class to connect
+        ConnectThreadAsync(address!!){
+            if (it== null) {
+                msg("Connection Failed. Is it a SPP Bluetooth? Try again.")
+                finish()
+            } else {
+                btSocket = it
+                msg("Connected.")
+                isBtConnected = true
+                openBT()
+            }
+            progress?.dismiss()
+        }.execute()
+
 
     }
 
@@ -137,6 +151,7 @@ class MainActivity : AppCompatActivity() {
         myBluetoothService = btSocket?.let { MyBluetoothService(handler!!, it) }
 
 
+
         Log.d("TAG","Bluetooth Opened")
     }
 
@@ -213,9 +228,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun turnOffLed() {
-        if (btSocket != null) {
+        if (myBluetoothService != null) {
             try {
-                btSocket?.outputStream?.write("0".toByteArray())
+                //btSocket?.outputStream?.write("0".toByteArray())
+                myBluetoothService?.write("0".toByteArray())
             } catch (e: IOException) {
                 msg("Error")
             }
@@ -224,9 +240,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun turnOnLed() {
-        if (btSocket != null) {
+        if (myBluetoothService != null) {
             try {
-                btSocket?.outputStream?.write("1".toByteArray())
+                //btSocket?.outputStream?.write("1".toByteArray())
+                myBluetoothService?.write("1".toByteArray())
             } catch (e: IOException) {
                 msg("Error")
             }

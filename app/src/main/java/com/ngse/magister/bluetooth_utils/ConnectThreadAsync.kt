@@ -14,7 +14,7 @@ import com.ngse.magister.data.STATUS
 import java.io.IOException
 
 
-class ConnectThreadAsync(var runSocket: (socket: BluetoothSocket?) -> Unit,deviceAddress : String) : AsyncTask<String, BluetoothDevice, BluetoothSocket>() {
+class ConnectThreadAsync(deviceAddress : String,var runSocket: (socket: BluetoothSocket?) -> Unit) : AsyncTask<String, BluetoothDevice, BluetoothSocket>() {
 
     private val mmSocket: BluetoothSocket? by lazy(LazyThreadSafetyMode.NONE) {
         mDevice?.createRfcommSocketToServiceRecord(BLUETOOTH_UUID)
@@ -25,23 +25,19 @@ class ConnectThreadAsync(var runSocket: (socket: BluetoothSocket?) -> Unit,devic
     private val mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter()//get the mobile bluetooth device
 
 
-    override fun doInBackground(vararg adress: String?): BluetoothSocket {
+    override fun doInBackground(vararg adress: String?): BluetoothSocket? {
         mDevice?.fetchUuidsWithSdp()
         mBluetoothAdapter?.cancelDiscovery()
         try {
 
-            mmSocket?.use { socket ->
-                // Connect to the remote device through the socket. This call blocks
-                // until it succeeds or throws an exception.
-                socket.connect()
+            mmSocket?.connect()
+            val isConnected = mmSocket?.isConnected
+            return mmSocket
 
-                // The connection attempt succeeded. Perform work associated with
-                // the connection in a separate thread.
-            }
         } catch (e: IOException) {
             e.printStackTrace()
         }
-        return mmSocket!!
+        return null
     }
 
     override fun onPostExecute(result: BluetoothSocket?) {
