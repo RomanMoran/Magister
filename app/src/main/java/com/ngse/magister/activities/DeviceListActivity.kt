@@ -1,15 +1,15 @@
-package com.ngse.magister
+package com.ngse.magister.activities
 
 import android.app.Activity
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import android.widget.Toast
+import com.ngse.magister.R
 import kotlinx.android.synthetic.main.activity_device_list.*
 
 
@@ -59,7 +59,7 @@ class DeviceListActivity : Activity(){
     private val myListClickListener = AdapterView.OnItemClickListener { av, v, arg2, arg3 ->
         val info = (v as TextView).text.toString()
         val address = info.substring(info.length - 17)
-        val i = Intent(this@DeviceListActivity, MainActivity::class.java)
+        val i = Intent(this@DeviceListActivity, ControlActivity::class.java)
         i.putExtra(EXTRA_ADDRESS, address)
         startActivity(i)
     }

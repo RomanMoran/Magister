@@ -17,3 +17,9 @@ enum class STATUS{
     CONNECTED;
     companion object : List<STATUS> by STATUS.values().toList()
 }
+
+enum class LedState(val value : String){
+    ON("1"),
+    OFF("0");
+    companion object : List<LedState> by LedState.values().toList()
+}

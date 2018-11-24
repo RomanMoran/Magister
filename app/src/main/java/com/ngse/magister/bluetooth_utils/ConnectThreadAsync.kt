@@ -4,13 +4,7 @@ import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
 import android.bluetooth.BluetoothSocket
 import android.os.AsyncTask
-import android.os.Handler
-import android.text.Editable
-import android.util.Log
 import com.ngse.magister.Constants.BLUETOOTH_UUID
-import com.ngse.magister.MESSAGE_STATUS
-import com.ngse.magister.MyBluetoothService
-import com.ngse.magister.data.STATUS
 import java.io.IOException
 
 
@@ -22,18 +16,13 @@ class ConnectThreadAsync(deviceAddress : String,var runSocket: (socket: Bluetoot
 
     private val mDevice : BluetoothDevice? by lazy { mBluetoothAdapter.getRemoteDevice(deviceAddress) }
 
-    private val mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter()//get the mobile bluetooth device
-
+    private val mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
 
     override fun doInBackground(vararg adress: String?): BluetoothSocket? {
         mDevice?.fetchUuidsWithSdp()
         mBluetoothAdapter?.cancelDiscovery()
         try {
-
-            mmSocket?.connect()
-            val isConnected = mmSocket?.isConnected
-            return mmSocket
-
+            return mmSocket?.apply { connect() }
         } catch (e: IOException) {
             e.printStackTrace()
         }
