@@ -104,6 +104,28 @@ class ReadWriteInteraction(
         writtenMsg.sendToTarget()
     }
 
+    fun write(value: Int) {
+        try {
+            mmOutStream.write(value.toString().toByteArray())
+        } catch (e: IOException) {
+            Log.e(TAG, "Error occurred when sending data", e)
+
+            // Send a failure message back to the activity.
+            val writeErrorMsg = mHandler.obtainMessage(MESSAGE_TOAST)
+            val bundle = Bundle().apply {
+                putString("toast", "Couldn't send data to the other device")
+            }
+            writeErrorMsg.data = bundle
+            mHandler.sendMessage(writeErrorMsg)
+            return
+        }
+        // Share the sent message with the UI activity.
+        val writtenMsg = mHandler.obtainMessage(
+            MESSAGE_WRITE, -1, -1, mmBuffer
+        )
+        writtenMsg.sendToTarget()
+    }
+
     // Call this method from the main activity to shut down the connection.
     fun cancel() {
         try {

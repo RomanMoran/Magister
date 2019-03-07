@@ -33,6 +33,7 @@ dependencies {
 
     implementation 'com.github.AnyChart:AnyChart-Android:1.0.6'
     implementation 'com.jjoe64:graphview:4.2.2'
+    //implementation 'me.angrybyte.slider:slider:1.4.2'
 
 
 }

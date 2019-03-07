@@ -20,6 +20,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.ControlActivity"/>
+        <activity android:name=".activities.ControlHumidityActivity"/>
     </application>
 
 </manifest>

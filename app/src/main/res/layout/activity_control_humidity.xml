@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <!--    <me.angrybyte.circularslider.CircularSlider
+                android:id="@+id/circular"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="30dp"
+                circular:angle="3.14"
+                circular:border_color="#505090"
+                circular:border_thickness="14dp"
+                circular:border_gradient_colors="#f05151;#4a90e2;#4a90e2"
+                circular:thumb_color="#30AEFF"
+                circular:thumb_size="24dp" />-->
+
+    <EditText
+            android:id="@+id/inputHumidityEditText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+    />
+
+    <Button
+            android:id="@+id/applyButton"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="@string/apply_new_value"
+            app:layout_constraintTop_toBottomOf="@+id/inputHumidityEditText"
+            app:layout_constraintStart_toStartOf="parent"
+    />
+
+    <Button
+            android:id="@+id/disconnectButton"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="@string/disconnect"
+            app:layout_constraintTop_toBottomOf="@+id/inputHumidityEditText"
+            app:layout_constraintStart_toEndOf="@id/applyButton"
+    />
+
+</android.support.constraint.ConstraintLayout>

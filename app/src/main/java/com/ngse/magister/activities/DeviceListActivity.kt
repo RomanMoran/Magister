@@ -5,6 +5,7 @@ import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
 import android.content.Intent
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.TextView
@@ -15,7 +16,7 @@ import kotlinx.android.synthetic.main.activity_device_list.*
 
 const val EXTRA_ADDRESS = "device_address"
 
-class DeviceListActivity : Activity(){
+class DeviceListActivity : AppCompatActivity(){
 
     //Bluetooth
     private var myBluetooth: BluetoothAdapter? = null
@@ -59,7 +60,8 @@ class DeviceListActivity : Activity(){
     private val myListClickListener = AdapterView.OnItemClickListener { av, v, arg2, arg3 ->
         val info = (v as TextView).text.toString()
         val address = info.substring(info.length - 17)
-        val i = Intent(this@DeviceListActivity, ControlActivity::class.java)
+        //val i = Intent(this@DeviceListActivity, ControlActivity::class.java)
+        val i = Intent(this@DeviceListActivity, ControlHumidityActivity::class.java)
         i.putExtra(EXTRA_ADDRESS, address)
         startActivity(i)
     }
